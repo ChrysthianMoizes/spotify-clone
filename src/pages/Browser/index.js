@@ -1,7 +1,52 @@
 import React from 'react';
 
-// import { Container } from './styles';
+import {
+ Container, Title, List, Playlist 
+} from './styles';
 
 export default function Browser() {
-  return <h1>Hellow</h1>;
+  return (
+    <Container>
+      <Title>Navegar</Title>
+
+      <List>
+        <Playlist href="">
+          <img
+            src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"
+            alt="Playlist"
+          />
+
+          <strong>Sertanejo Universitário</strong>
+          <p>Ouça o mais novo sucesso do Embaixador. Fala comigo BB!</p>
+        </Playlist>
+        <Playlist href="">
+          <img
+            src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"
+            alt="Playlist"
+          />
+
+          <strong>Sertanejo Universitário</strong>
+          <p>Ouça o mais novo sucesso do Embaixador. Fala comigo BB!</p>
+        </Playlist>
+        <Playlist href="">
+          <img
+            src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"
+            alt="Playlist"
+          />
+
+          <strong>Sertanejo Universitário</strong>
+          <p>Ouça o mais novo sucesso do Embaixador. Fala comigo BB!</p>
+        </Playlist>
+        <Playlist href="">
+          <img
+            src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"
+            alt="Playlist"
+          />
+
+          <strong>Sertanejo Universitário</strong>
+          <p>Ouça o mais novo sucesso do Embaixador. Fala comigo BB!</p>
+        </Playlist>
+      </List>
+    </Container>
+  );
 }
