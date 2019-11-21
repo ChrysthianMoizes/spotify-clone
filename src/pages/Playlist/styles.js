@@ -46,6 +46,11 @@ export const Header = styled.header`
       margin-top: 10px;
       font-size: 12px;
       letter-spacing: 1.11px;
+
+      &:hover {
+        cursor: pointer;
+        background: #139a3d;
+      }
     }
   }
 `;
@@ -86,5 +91,6 @@ export const SongList = styled.table`
 
   tbody tr:hover {
     background: #282828;
+    cursor: pointer;
   }
 `;
