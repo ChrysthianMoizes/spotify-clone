@@ -10,7 +10,7 @@ export default function Browser() {
       <Title>Navegar</Title>
 
       <List>
-        <Playlist href="">
+        <Playlist to="/playlists/1">
           <img
             src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"
             alt="Playlist"
@@ -19,7 +19,7 @@ export default function Browser() {
           <strong>Sertanejo Universitário</strong>
           <p>Ouça o mais novo sucesso do Embaixador. Fala comigo BB!</p>
         </Playlist>
-        <Playlist href="">
+        <Playlist to="/playlists/1">
           <img
             src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"
             alt="Playlist"
@@ -28,7 +28,7 @@ export default function Browser() {
           <strong>Sertanejo Universitário</strong>
           <p>Ouça o mais novo sucesso do Embaixador. Fala comigo BB!</p>
         </Playlist>
-        <Playlist href="">
+        <Playlist to="/playlists/1">
           <img
             src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"
             alt="Playlist"
@@ -37,7 +37,7 @@ export default function Browser() {
           <strong>Sertanejo Universitário</strong>
           <p>Ouça o mais novo sucesso do Embaixador. Fala comigo BB!</p>
         </Playlist>
-        <Playlist href="">
+        <Playlist to="/playlists/1">
           <img
             src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"
             alt="Playlist"
