@@ -1,51 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
 
 import {
  Container, Title, List, Playlist 
 } from './styles';
 
 export default function Browser() {
+  const playlists = useSelector((state) => state.playlists.data);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(PlaylistsActions.getPlaylistsRequest());
+  }, [dispatch]);
+
   return (
     <Container>
       <Title>Navegar</Title>
 
       <List>
-        <Playlist to="/playlists/1">
-          <img
-            src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"
-            alt="Playlist"
-          />
+        {playlists.map((playlist) => (
+          <Playlist key={playlist.id} to={`/playlists/${playlist.id}`}>
+            <img src={playlist.thumbnail} alt={playlist.title} />
 
-          <strong>Sertanejo Universitário</strong>
-          <p>Ouça o mais novo sucesso do Embaixador. Fala comigo BB!</p>
-        </Playlist>
-        <Playlist to="/playlists/1">
-          <img
-            src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"
-            alt="Playlist"
-          />
-
-          <strong>Sertanejo Universitário</strong>
-          <p>Ouça o mais novo sucesso do Embaixador. Fala comigo BB!</p>
-        </Playlist>
-        <Playlist to="/playlists/1">
-          <img
-            src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"
-            alt="Playlist"
-          />
-
-          <strong>Sertanejo Universitário</strong>
-          <p>Ouça o mais novo sucesso do Embaixador. Fala comigo BB!</p>
-        </Playlist>
-        <Playlist to="/playlists/1">
-          <img
-            src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"
-            alt="Playlist"
-          />
-
-          <strong>Sertanejo Universitário</strong>
-          <p>Ouça o mais novo sucesso do Embaixador. Fala comigo BB!</p>
-        </Playlist>
+            <strong>{playlist.title}</strong>
+            <p>{playlist.description}</p>
+          </Playlist>
+        ))}
       </List>
     </Container>
   );

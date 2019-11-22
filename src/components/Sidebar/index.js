@@ -1,16 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
+import { useSelector, useDispatch } from 'react-redux';
+import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
 
 import { Container, NewPlaylist, Nav } from './styles';
 
 import addPlaylistIcon from '../../assets/images/add_playlist.svg';
 
 export default function Sidebar() {
+  const playlists = useSelector((state) => state.playlists.data);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(PlaylistsActions.getPlaylistsRequest());
+  }, [dispatch]);
+
   return (
     <Container>
       <div>
         <Nav main>
           <li>
-            <a href="">Navegar</a>
+            <Link to="/">Navegar</Link>
           </li>
           <li>
             <a href="">Rádio</a>
@@ -53,9 +64,12 @@ export default function Sidebar() {
           <li>
             <span>PLAYLISTS</span>
           </li>
-          <li>
-            <a href="">Top Sertanejo</a>
-          </li>
+
+          {playlists.map((playlist) => (
+            <li key={playlist.id}>
+              <Link to={`playlists/${playlist.id}`}>{playlist.title}</Link>
+            </li>
+          ))}
         </Nav>
       </div>
       <NewPlaylist>
