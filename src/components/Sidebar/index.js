@@ -6,10 +6,13 @@ import { Creators as PlaylistsActions } from '../../store/ducks/playlists';
 
 import { Container, NewPlaylist, Nav } from './styles';
 
+import Loading from '../Loading';
+
 import addPlaylistIcon from '../../assets/images/add_playlist.svg';
 
 export default function Sidebar() {
   const playlists = useSelector((state) => state.playlists.data);
+  const loading = useSelector((state) => state.playlists.loading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -63,6 +66,7 @@ export default function Sidebar() {
         <Nav>
           <li>
             <span>PLAYLISTS</span>
+            {loading && <Loading />}
           </li>
 
           {playlists.map((playlist) => (

@@ -7,8 +7,11 @@ import {
  Container, Title, List, Playlist 
 } from './styles';
 
+import Loading from '../../components/Loading';
+
 export default function Browser() {
   const playlists = useSelector((state) => state.playlists.data);
+  const loading = useSelector((state) => state.playlists.loading);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,7 +20,7 @@ export default function Browser() {
 
   return (
     <Container>
-      <Title>Navegar</Title>
+      <Title>Navegar {loading && <Loading />}</Title>
 
       <List>
         {playlists.map((playlist) => (
