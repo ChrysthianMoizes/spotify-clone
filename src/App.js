@@ -10,6 +10,7 @@ import GlobalStyle from './styles/global';
 import Sidebar from './components/Sidebar';
 import Player from './components/Player';
 import Header from './components/Header';
+import Error from './components/Error';
 
 import { Wrapper, Container, Content } from './styles/components';
 
@@ -24,6 +25,7 @@ function App() {
           <Container>
             <Sidebar />
             <Content>
+              <Error />
               <Header />
               <Routes />
             </Content>
