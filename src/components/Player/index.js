@@ -57,6 +57,7 @@ export default function Player() {
             dispatch(PlayerActions.playing(position, duration));
           }}
           position={player.position}
+          volume={player.volume}
         />
       )}
 
@@ -121,7 +122,8 @@ export default function Player() {
           railStyle={{ background: '#404040', borderRadius: 10 }}
           trackStyle={{ background: '#1ED760' }}
           handleStyle={{ display: 'none' }}
-          value={100}
+          value={player.volume}
+          onChange={(volume) => dispatch(PlayerActions.setVolume(volume))}
         />
       </Volume>
     </Container>
