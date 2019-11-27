@@ -1,6 +1,8 @@
 import React from 'react';
 import Slider from 'rc-slider';
+import Sound from 'react-sound';
 
+import { useSelector } from 'react-redux';
 import {
   Container,
   Current,
@@ -20,8 +22,14 @@ import forwardIcon from '../../assets/images/forward.svg';
 import repeatIcon from '../../assets/images/repeat.svg';
 
 export default function Player() {
+  const player = useSelector((state) => state.player);
+
   return (
     <Container>
+      {!!player.current && (
+        <Sound url={player.current.file} playStatus={player.status} />
+      )}
+
       <Current>
         <img
           src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"

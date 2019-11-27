@@ -6,6 +6,7 @@ import { Container, Header, SongList } from './styles';
 import Loading from '../../components/Loading';
 
 import { Creators as PlaylistDetailsActions } from '../../store/ducks/playlistDetail';
+import { Creators as PlayerActions } from '../../store/ducks/player';
 
 import clockIcon from '../../assets/images/clock.svg';
 import plusIcon from '../../assets/images/plus.svg';
@@ -24,6 +25,10 @@ export default function Playlist({ match }) {
 
     loadPlaylistDetails();
   }, [dispatch, match.params]);
+
+  function loadSong(song) {
+    dispatch(PlayerActions.loadSong(song));
+  }
 
   function renderDetails() {
     return (
@@ -58,7 +63,7 @@ export default function Playlist({ match }) {
               </tr>
             ) : (
               playlist.songs.map((song) => (
-                <tr key={song.id}>
+                <tr key={song.id} onDoubleClick={() => loadSong(song)}>
                   <td>
                     <img src={plusIcon} alt="Adicionar" />
                   </td>
