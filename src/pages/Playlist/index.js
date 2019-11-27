@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Header, SongList } from './styles';
+import {
+ Container, Header, SongList, SongItem 
+} from './styles';
 
 import Loading from '../../components/Loading';
 
@@ -13,8 +15,11 @@ import plusIcon from '../../assets/images/plus.svg';
 
 export default function Playlist({ match }) {
   const playlist = useSelector((state) => state.playlistDetails.data);
+  const player = useSelector((state) => state.player);
   const loading = useSelector((state) => state.playlistDetails.loading);
   const dispatch = useDispatch();
+
+  const [selectedSong, setSelectedSong] = useState(null);
 
   useEffect(() => {
     function loadPlaylistDetails() {
@@ -26,8 +31,8 @@ export default function Playlist({ match }) {
     loadPlaylistDetails();
   }, [dispatch, match.params]);
 
-  function loadSong(song) {
-    dispatch(PlayerActions.loadSong(song));
+  function loadSong(song, songs) {
+    dispatch(PlayerActions.loadSong(song, songs));
   }
 
   function renderDetails() {
@@ -47,7 +52,7 @@ export default function Playlist({ match }) {
 
         <SongList cellPadding={0} cellSpacing={0}>
           <thead>
-            <th />
+            <th> </th>
             <th>Título</th>
             <th>Artista</th>
             <th>Álbumn</th>
@@ -63,7 +68,13 @@ export default function Playlist({ match }) {
               </tr>
             ) : (
               playlist.songs.map((song) => (
-                <tr key={song.id} onDoubleClick={() => loadSong(song)}>
+                <SongItem
+                  key={song.id}
+                  onClick={() => setSelectedSong(song.id)}
+                  onDoubleClick={() => loadSong(song, playlist.songs)}
+                  selected={selectedSong === song.id}
+                  playing={player.current && player.current.id === song.id}
+                >
                   <td>
                     <img src={plusIcon} alt="Adicionar" />
                   </td>
@@ -71,7 +82,7 @@ export default function Playlist({ match }) {
                   <td>{song.author}</td>
                   <td>{song.album}</td>
                   <td>4:24</td>
-                </tr>
+                </SongItem>
               ))
             )}
           </tbody>

@@ -2,7 +2,7 @@ import React from 'react';
 import Slider from 'rc-slider';
 import Sound from 'react-sound';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Container,
   Current,
@@ -13,33 +13,41 @@ import {
   ProgressSlider,
 } from './styles';
 
+import { Creators as PlayerActions } from '../../store/ducks/player';
+
 import volumeIcon from '../../assets/images/volume.svg';
 import shuffleIcon from '../../assets/images/shuffle.svg';
 import backwardIcon from '../../assets/images/backward.svg';
 import playIcon from '../../assets/images/play.svg';
-// import pauseIcon from '../../assets/images/pause.svg';
+import pauseIcon from '../../assets/images/pause.svg';
 import forwardIcon from '../../assets/images/forward.svg';
 import repeatIcon from '../../assets/images/repeat.svg';
 
 export default function Player() {
   const player = useSelector((state) => state.player);
+  const dispatch = useDispatch();
 
   return (
     <Container>
       {!!player.current && (
-        <Sound url={player.current.file} playStatus={player.status} />
+        <Sound
+          url={player.current.file}
+          playStatus={player.status}
+          onFinishedPlaying={() => dispatch(PlayerActions.next())}
+        />
       )}
 
       <Current>
-        <img
-          src="https://sistemasertanejo.com/wp-content/uploads/2019/09/quem-traiu-500x500.jpg"
-          alt="Música atual"
-        />
+        {!!player.current && (
+          <>
+            <img src={player.current.thumbnail} alt={player.current.title} />
 
-        <div>
-          <span>Quem Traiu Levou</span>
-          <small>Gusttavo Lima</small>
-        </div>
+            <div>
+              <span>{player.current.title}</span>
+              <small>{player.current.author}</small>
+            </div>
+          </>
+        )}
       </Current>
 
       <Progress>
@@ -47,13 +55,19 @@ export default function Player() {
           <button>
             <img src={shuffleIcon} alt="Shuffle" />
           </button>
-          <button>
+          <button onClick={() => dispatch(PlayerActions.prev())}>
             <img src={backwardIcon} alt="Backward" />
           </button>
-          <button>
-            <img src={playIcon} alt="Play" />
-          </button>
-          <button>
+          {!!player.current && player.status === Sound.status.PLAYING ? (
+            <button onClick={() => dispatch(PlayerActions.pause())}>
+              <img src={pauseIcon} alt="Pause" />
+            </button>
+          ) : (
+            <button onClick={() => dispatch(PlayerActions.play())}>
+              <img src={playIcon} alt="Play" />
+            </button>
+          )}
+          <button onClick={() => dispatch(PlayerActions.next())}>
             <img src={forwardIcon} alt="Forward" />
           </button>
           <button>
