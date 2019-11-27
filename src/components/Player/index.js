@@ -23,8 +23,19 @@ import pauseIcon from '../../assets/images/pause.svg';
 import forwardIcon from '../../assets/images/forward.svg';
 import repeatIcon from '../../assets/images/repeat.svg';
 
+function msToTime(duration) {
+  let seconds = parseInt((duration / 1000) % 60, 10);
+  const minutes = parseInt((duration / (1000 * 60)) % 60, 10);
+
+  seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+  return `${minutes}:${seconds}`;
+}
+
 export default function Player() {
   const player = useSelector((state) => state.player);
+  const currentTime = useSelector((state) => msToTime(state.player.position));
+  const fullTime = useSelector((state) => msToTime(state.player.duration));
   const dispatch = useDispatch();
 
   return (
@@ -34,6 +45,9 @@ export default function Player() {
           url={player.current.file}
           playStatus={player.status}
           onFinishedPlaying={() => dispatch(PlayerActions.next())}
+          onPlaying={({ position, duration }) => {
+            dispatch(PlayerActions.playing(position, duration));
+          }}
         />
       )}
 
@@ -76,7 +90,7 @@ export default function Player() {
         </Controls>
 
         <Time>
-          <span>1:34</span>
+          <span>{currentTime}</span>
           <ProgressSlider>
             <Slider
               railStyle={{ background: '#404040', borderRadius: 10 }}
@@ -84,7 +98,7 @@ export default function Player() {
               handleStyle={{ border: 0 }}
             />
           </ProgressSlider>
-          <span>4:23</span>
+          <span>{fullTime}</span>
         </Time>
       </Progress>
 
