@@ -24,6 +24,8 @@ import forwardIcon from '../../assets/images/forward.svg';
 import repeatIcon from '../../assets/images/repeat.svg';
 
 function msToTime(duration) {
+  if (!duration) return null;
+
   let seconds = parseInt((duration / 1000) % 60, 10);
   const minutes = parseInt((duration / (1000 * 60)) % 60, 10);
 
@@ -32,10 +34,16 @@ function msToTime(duration) {
   return `${minutes}:${seconds}`;
 }
 
+function getProgress({ positionShow, position, duration }) {
+  return parseInt((positionShow || position) * (1000 / duration), 10);
+}
+
 export default function Player() {
+  const show = useSelector((state) => msToTime(state.player.positionShow));
   const player = useSelector((state) => state.player);
   const currentTime = useSelector((state) => msToTime(state.player.position));
   const fullTime = useSelector((state) => msToTime(state.player.duration));
+  const progress = useSelector((state) => getProgress(state.player));
   const dispatch = useDispatch();
 
   return (
@@ -48,6 +56,7 @@ export default function Player() {
           onPlaying={({ position, duration }) => {
             dispatch(PlayerActions.playing(position, duration));
           }}
+          position={player.position}
         />
       )}
 
@@ -90,12 +99,16 @@ export default function Player() {
         </Controls>
 
         <Time>
-          <span>{currentTime}</span>
+          <span>{show || currentTime}</span>
           <ProgressSlider>
             <Slider
               railStyle={{ background: '#404040', borderRadius: 10 }}
               trackStyle={{ background: '#1ED760' }}
               handleStyle={{ border: 0 }}
+              max={1000}
+              value={progress}
+              onChange={(value) => dispatch(PlayerActions.handleTime(value / 1000))}
+              onAfterChange={(value) => dispatch(PlayerActions.setTime(value / 1000))}
             />
           </ProgressSlider>
           <span>{fullTime}</span>
